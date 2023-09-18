@@ -1,0 +1,34 @@
+// COLORS
+//~~~~~~~~~~~~~~~~~~~~~~~
+
+$charcoal: #0a0a0a;
+$eigengrau: #16161d;
+$white: #fcfcfa;
+$red: tomato;
+$green: #c0ff33;
+
+
+// RESETS
+//~~~~~~~~~~~~~~~~~~~~~~~
+
+* {
+  box-sizing: border-box;
+}
+
+%input-reset {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+
+// FUNCTIONS
+//~~~~~~~~~~~~~~~~~~~~~~~
+
+$col: 18;
+$gutter: 1.5rem;
+
+@function columns($width) {
+  @return #{ ($width/$col)*100 }vw;
+}
+
