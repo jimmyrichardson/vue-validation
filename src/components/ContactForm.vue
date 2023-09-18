@@ -1,6 +1,59 @@
 <template>
-  <form id="contact-form" class="contact-form" novalidate @submit.prevent="submit()">
+  <form
+    id="contact-form"
+    class="contact-form"
+    novalidate
+    @submit.prevent="submit()">
+    
     <h1>Simple Contact Form</h1>
+
+    <!--
+      Form fields:
+        -Full name (text)
+        -Phone number (tel)
+        -Interest (select)
+        -Description (textarea)
+        -Reference (checkbox)
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+      Normally I would componentize these form fields
+      and use an emitter to update their model values,
+      but smaller projects like this one may not always warrant them.
+      If we were to scale this with more form fields,
+      componentization (and more BEM) would
+      be first on the todo list.
+
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+      Label structure:
+
+      <label for="form--[id]">
+        [...] <sup class="required">*</sup>
+      </label>
+      <input id="form--[id]" />
+      <small class="validation">
+        [...]
+      </small>
+
+      ///
+
+      Checkbox structure:
+
+      <label class="label--checkbox" for="form-[name]--[id]">
+        <input
+          id="form-[name]--[id]"
+          type="checkbox" />
+        [...]
+      </label>
+      
+    -->
+
+
+    <!--
+      Form Name (text) (required)
+      -Must be a minimum of 3 characters long
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    -->
 
     <label for="form-name">
       Full Name<sup class="required">*</sup>
@@ -22,6 +75,12 @@
       class="validation">
       Please provide your full name.
     </small>
+
+    <!--
+      Phone Number (tel) (required)
+      -Must be numbers-only
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    -->
 
     <label for="form-phone">
       Phone Number<sup class="required">*</sup>
@@ -45,6 +104,11 @@
       Please provide a valid phone number.
     </small>
 
+    <!--
+      Interest (select) (required)
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    -->
+    
     <label for="form-interest">
       Please select an interest<sup class="required">*</sup>
     </label>
@@ -58,13 +122,17 @@
       name="interest"
       required>
       <option selected disabled>Please select an interest...</option>
-
       <!-- These options were missing in the assessment doc, sorry ¯\_(ツ)_/¯ -->
-
       <option value="One">One</option>
       <option value="Two">Two</option>
       <option value="Three">Three</option>
     </select>
+
+    <!--
+      Description (textarea) (required)
+      -Must be a maximum of 500 characters
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    -->
 
     <label for="form-description">
       Description<sup class="required">*</sup>
@@ -84,19 +152,16 @@
       Characters remaining: {{ remainingCharacters }}
     </small>
 
+    <!--
+      Reference (checkbox) (required)
+      -Must have at least 1 selected
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    -->
+
     <label>
       Reference <sup class="required">*</sup>
     </label>
 
-    <!-- <ContactFormInput
-      type="checkbox"
-      v-model="formData.reference"
-      :class="{
-        'input--has-error': touched.reference && !valid.reference,
-        'input--is-valid': touched.reference && valid.reference,
-      }"
-      @change="validateReference()" /> -->
-   
     <label class="label--checkbox" for="form-reference--online-ad">
       <input
         v-model="formData.reference"
@@ -149,6 +214,12 @@
         Other
     </label>
 
+    <!--
+      Submit Button
+      -All required fields must be valid before this shows
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    -->
+
     <button
       v-if="formIsValid"
       type="submit">
@@ -159,8 +230,6 @@
 </template>
 
 <script>
-// import ContactFormInput from './ContactFormInput.vue';
-
 export default {
   name: 'submit-modal',
   data() {
@@ -260,9 +329,6 @@ export default {
     submit() {
       this.$store.dispatch('SUBMIT_FORM', this.formData );
     }
-  },
-  components: {
-    //ContactFormInput,
   }
 }
 </script>
